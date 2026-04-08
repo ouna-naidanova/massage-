@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Массажный салон «Гармония»{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'salon/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Фиксированная кнопка "Записаться" -->
+    <a href="{% url 'appointment_create' %}" class="fixed-book-btn">Записаться</a>
+
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <div class="logo">
+                    <h1>🌿 Гармония</h1>
+                    <p>массажный салон</p>
+                </div>
+                <nav class="nav">
+                    <a href="{% url 'index' %}">Главная</a>
+                    <a href="{% url 'master_list' %}">Мастера</a>
+                    <a href="{% url 'service_list' %}">Услуги</a>
+                    <a href="{% url 'appointment_create' %}" class="nav-btn">Записаться</a>
+                </nav>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__info">
+                    <h3>🌿 Массажный салон «Гармония»</h3>
+                    <p>Место, где вы обретаете гармонию тела и духа</p>
+                </div>
+                <div class="footer__contacts">
+                    <p>📞 +7 (999) 123-45-67</p>
+                    <p>📍 ул. Цветочная, 15, Москва</p>
+                    <p>⏰ Ежедневно с 10:00 до 21:00</p>
+                </div>
+                <div class="footer__social">
+                    <a href="#">📷 Instagram</a>
+                    <a href="#">💬 Telegram</a>
+                    <a href="#">📱 WhatsApp</a>
+                </div>
+            </div>
+            <div class="footer__copyright">
+                <p>© 2025 Массажный салон «Гармония». Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Мобильное меню
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const nav = document.querySelector('.nav');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', function() {
+                nav.classList.toggle('nav--open');
+            });
+        }
+
+        // Плавное появление фиксированной кнопки
+        window.addEventListener('scroll', function() {
+            const btn = document.querySelector('.fixed-book-btn');
+            if (btn) {
+                if (window.scrollY > 300) {
+                    btn.classList.add('visible');
+                } else {
+                    btn.classList.remove('visible');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

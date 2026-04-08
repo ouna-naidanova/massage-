@@ -1,0 +1,34 @@
+{% extends 'salon/base.html' %}
+{% load static %}
+
+{% block title %}Услуги и цены — Массажный салон «Гармония»{% endblock %}
+
+{% block content %}
+<section class="services-page">
+    <div class="container">
+        <h2 class="section-title">Услуги и цены</h2>
+        <p class="section-subtitle">Выберите массаж, который подходит именно вам</p>
+        
+        <div class="services-list">
+            {% for service in services %}
+            <div class="service-item">
+                <div class="service-item__info">
+                    <h3>{{ service.name }}</h3>
+                    <p>{{ service.description|default:"Расслабляющий массаж для восстановления энергии" }}</p>
+                    <div class="service-meta">
+                        <span>🕐 {{ service.duration }} минут</span>
+                        <span>📁 {{ service.category }}</span>
+                    </div>
+                </div>
+                <div class="service-item__price">
+                    <span>{{ service.price }} ₽</span>
+                    <a href="{% url 'appointment_create' %}?service={{ service.id }}" class="btn-small">Записаться</a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">Услуги скоро появятся. Следите за обновлениями!</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'salon/base.html' %}
+{% load static %}
+
+{% block title %}Заявка отправлена — Массажный салон «Гармония»{% endblock %}
+
+{% block content %}
+<section class="success-section">
+    <div class="container">
+        <div class="success-card">
+            <div class="success-icon">✅</div>
+            <h2>Заявка успешно отправлена!</h2>
+            <p>Спасибо за доверие! Наш администратор свяжется с вами в ближайшее время для подтверждения записи.</p>
+            <p>Если у вас есть вопросы, вы можете позвонить нам по телефону: <strong>+7 (999) 123-45-67</strong></p>
+            <div class="success-actions">
+                <a href="{% url 'index' %}" class="btn">Вернуться на главную</a>
+                <a href="{% url 'service_list' %}" class="btn btn--outline">Посмотреть услуги</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

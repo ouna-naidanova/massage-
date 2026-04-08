@@ -1,0 +1,98 @@
+{% extends 'salon/base.html' %}
+{% load static %}
+
+{% block title %}Записаться на массаж — Массажный салон «Гармония»{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <div class="container">
+        <div class="form-section__inner">
+            <div class="form-section__info">
+                <h2 class="section-title">Записаться на массаж</h2>
+                <p>Заполните форму, и наш администратор свяжется с вами для подтверждения записи.</p>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <span>📞</span>
+                        <div>+7 (999) 123-45-67</div>
+                    </div>
+                    <div class="info-card">
+                        <span>💬</span>
+                        <div>Telegram, WhatsApp, Viber</div>
+                    </div>
+                    <div class="info-card">
+                        <span>📍</span>
+                        <div>ул. Цветочная, 15, Москва</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section__form">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="post" class="appointment-form">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="client_name">Ваше имя *</label>
+                        <input type="text" id="client_name" name="client_name" required placeholder="Анна" value="{{ request.GET.name|default:'' }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="client_phone">Телефон *</label>
+                        <input type="tel" id="client_phone" name="client_phone" required placeholder="+7 (999) 123-45-67">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="client_email">Email (необязательно)</label>
+                        <input type="email" id="client_email" name="client_email" placeholder="anna@example.com">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="master">Предпочитаемый мастер</label>
+                            <select id="master" name="master">
+                                <option value="">Любой мастер</option>
+                                {% for master in masters %}
+                                <option value="{{ master.id }}" {% if request.GET.master == master.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ master.full_name }} — {{ master.specialization }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Услуга *</label>
+                            <select id="service" name="service" required>
+                                <option value="">Выберите услугу</option>
+                                {% for service in services %}
+                                <option value="{{ service.id }}" {% if request.GET.service == service.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ service.name }} — {{ service.price }} ₽
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointment_date">Удобная дата</label>
+                            <input type="date" id="appointment_date" name="appointment_date" min="{% now 'Y-m-d' %}">
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment_time">Удобное время</label>
+                            <input type="time" id="appointment_time" name="appointment_time" min="10:00" max="21:00">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn--submit">Отправить заявку</button>
+                    <p class="form-note">* — поля, обязательные для заполнения</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

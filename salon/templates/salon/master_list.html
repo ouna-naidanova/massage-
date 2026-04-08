@@ -1,0 +1,36 @@
+{% extends 'salon/base.html' %}
+{% load static %}
+
+{% block title %}Наши мастера — Массажный салон «Гармония»{% endblock %}
+
+{% block content %}
+<section class="masters-page">
+    <div class="container">
+        <h2 class="section-title">Наши мастера</h2>
+        <p class="section-subtitle">Профессионалы с многолетним опытом, которые заботятся о вашем здоровье</p>
+        
+        <div class="masters-grid">
+            {% for master in masters %}
+            <div class="master-card master-card--full">
+                <div class="master-photo">
+                    {% if master.photo %}
+                    <img src="{{ master.photo }}" alt="{{ master.full_name }}">
+                    {% else %}
+                    <div class="master-placeholder">🧘‍♀️</div>
+                    {% endif %}
+                </div>
+                <div class="master-info">
+                    <h3>{{ master.full_name }}</h3>
+                    <p class="specialization">{{ master.specialization }}</p>
+                    <p class="experience">Стаж: {{ master.experience }} лет</p>
+                    <p class="bio">{{ master.bio|truncatewords:30|default:"Опытный специалист, который поможет вам восстановить гармонию тела и духа." }}</p>
+                    <a href="{% url 'master_detail' master.pk %}" class="btn btn--small">Подробнее о мастере →</a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">Информация о мастерах скоро появится. Следите за обновлениями!</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

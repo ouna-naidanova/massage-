@@ -1,0 +1,34 @@
+{% extends 'salon/base.html' %}
+{% load static %}
+
+{% block title %}{{ master.full_name }} — мастер массажного салона «Гармония»{% endblock %}
+
+{% block content %}
+<section class="master-detail">
+    <div class="container">
+        <div class="master-detail__inner">
+            <div class="master-detail__image">
+                {% if master.photo %}
+                <img src="{{ master.photo }}" alt="{{ master.full_name }}">
+                {% else %}
+                <div class="master-placeholder large">🧘‍♀️</div>
+                {% endif %}
+            </div>
+            <div class="master-detail__info">
+                <h2>{{ master.full_name }}</h2>
+                <p class="specialization">{{ master.specialization }}</p>
+                <p class="experience">⭐ Стаж работы: {{ master.experience }} лет</p>
+                
+                <div class="bio">
+                    <h3>О мастере</h3>
+                    <p>{{ master.bio|default:"Опытный специалист, который поможет вам восстановить гармонию тела и духа. Постоянно повышает квалификацию, изучает новые техники массажа." }}</p>
+                </div>
+                
+                <div class="master-actions">
+                    <a href="{% url 'appointment_create' %}?master={{ master.id }}" class="btn btn--large">Записаться к мастеру</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

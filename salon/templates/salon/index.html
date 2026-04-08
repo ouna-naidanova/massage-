@@ -1,0 +1,118 @@
+{% extends 'salon/base.html' %}
+{% load static %}
+
+{% block title %}Главная — Массажный салон «Гармония»{% endblock %}
+
+{% block content %}
+<!-- Hero-секция -->
+<section class="hero">
+    <div class="container">
+        <div class="hero__content">
+            <h2>Массаж, который возвращает к жизни</h2>
+            <p>Мы создали пространство, где каждый может восстановить баланс тела и души. Натуральные масла, мягкий свет, опытные мастера.</p>
+            <a href="{% url 'appointment_create' %}" class="btn btn--large">Записаться на массаж</a>
+        </div>
+    </div>
+</section>
+
+<!-- Наши преимущества -->
+<section class="advantages">
+    <div class="container">
+        <h2 class="section-title">Почему выбирают нас</h2>
+        <div class="advantages-grid">
+            <div class="advantage-card">
+                <div class="advantage-icon">🏆</div>
+                <h3>Опытные мастера</h3>
+                <p>Стаж каждого мастера — от 5 лет. Регулярное повышение квалификации.</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🌿</div>
+                <h3>Натуральные масла</h3>
+                <p>Используем только сертифицированные масла и косметику.</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🕯️</div>
+                <h3>Расслабляющая атмосфера</h3>
+                <p>Мягкий свет, приятная музыка, ароматерапия.</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">📍</div>
+                <h3>Удобное расположение</h3>
+                <p>В центре города, рядом с метро, есть парковка.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Популярные услуги -->
+<section class="services-preview">
+    <div class="container">
+        <h2 class="section-title">Популярные услуги</h2>
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card">
+                <h3>{{ service.name }}</h3>
+                <p>{{ service.description|truncatewords:15|default:"Расслабляющий массаж для восстановления энергии" }}</p>
+                <div class="service-info">
+                    <span>🕐 {{ service.duration }} мин</span>
+                    <span>💰 {{ service.price }} ₽</span>
+                </div>
+                <a href="{% url 'appointment_create' %}" class="btn-small">Записаться</a>
+            </div>
+            {% empty %}
+            <p class="text-center">Услуги скоро появятся. Следите за обновлениями!</p>
+            {% endfor %}
+        </div>
+        <div class="text-center">
+            <a href="{% url 'service_list' %}" class="btn btn--outline">Смотреть все услуги →</a>
+        </div>
+    </div>
+</section>
+
+<!-- Наши мастера -->
+<section class="masters-preview">
+    <div class="container">
+        <h2 class="section-title">Наши мастера</h2>
+        <div class="masters-grid">
+            {% for master in masters %}
+            <div class="master-card">
+                <div class="master-photo">
+                    {% if master.photo %}
+                    <img src="{{ master.photo }}" alt="{{ master.full_name }}">
+                    {% else %}
+                    <div class="master-placeholder">🧘‍♀️</div>
+                    {% endif %}
+                </div>
+                <h3>{{ master.full_name }}</h3>
+                <p class="specialization">{{ master.specialization }}</p>
+                <p class="experience">Стаж: {{ master.experience }} лет</p>
+                <a href="{% url 'master_detail' master.pk %}" class="btn-link">Подробнее →</a>
+            </div>
+            {% empty %}
+            <p class="text-center">Информация о мастерах скоро появится.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Отзывы -->
+<section class="reviews">
+    <div class="container">
+        <h2 class="section-title">Отзывы наших клиентов</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <p class="review-text">"Отличный массаж! Анна Ивановна настоящий профессионал. После сеанса чувствую себя заново родившейся."</p>
+                <p class="review-author">— Екатерина, Москва</p>
+            </div>
+            <div class="review-card">
+                <p class="review-text">"Очень понравилась атмосфера салона. Тихо, спокойно, расслабляющая музыка. Обязательно приду ещё!"</p>
+                <p class="review-author">— Дмитрий, Москва</p>
+            </div>
+            <div class="review-card">
+                <p class="review-text">"Лучший массажный салон в городе. Сергей — мастер с золотыми руками. Рекомендую всем!"</p>
+                <p class="review-author">— Ольга, Москва</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

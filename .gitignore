@@ -1,0 +1,25 @@
+# Виртуальное окружение
+venv/
+env/
+.env/
+
+# База данных
+db.sqlite3
+*.sqlite3
+
+# Файлы Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django
+*.log
+staticfiles/
+media/
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
