@@ -9,88 +9,97 @@
     <div class="container">
         <div class="hero__content">
             <h2>Массаж, который возвращает к жизни</h2>
-            <p>Мы создали пространство, где каждый может восстановить баланс тела и души. Натуральные масла, мягкий свет, опытные мастера.</p>
-            <a href="{% url 'appointment_create' %}" class="btn btn--large">Записаться на массаж</a>
+            <p>Мы создали пространство, где каждый может восстановить баланс тела и души.</p>
+            <a href="{% url 'appointment_create' %}" class="btn btn--large">Записаться</a>
         </div>
     </div>
 </section>
 
-<!-- Наши преимущества -->
-<section class="advantages">
+<!-- О нас -->
+<section class="about">
     <div class="container">
-        <h2 class="section-title">Почему выбирают нас</h2>
-        <div class="advantages-grid">
-            <div class="advantage-card">
-                <div class="advantage-icon">🏆</div>
-                <h3>Опытные мастера</h3>
-                <p>Стаж каждого мастера — от 5 лет. Регулярное повышение квалификации.</p>
+        <h2 class="section-title">О салоне «Гармония»</h2>
+        <div class="about__content">
+            <div class="about__text">
+                <p>Массажный салон «Гармония» — это место, где традиции восточной медицины встречаются с современными техниками массажа. Наши мастера помогут вам снять стресс, избавиться от боли в спине и суставах, восстановить энергию и улучшить общее самочувствие.</p>
+                <p>Мы работаем с 2015 года и за это время помогли более 5000 клиентам. В нашем салоне вы найдёте уютную атмосферу, профессиональное оборудование и индивидуальный подход к каждому гостю.</p>
             </div>
-            <div class="advantage-card">
-                <div class="advantage-icon">🌿</div>
-                <h3>Натуральные масла</h3>
-                <p>Используем только сертифицированные масла и косметику.</p>
-            </div>
-            <div class="advantage-card">
-                <div class="advantage-icon">🕯️</div>
-                <h3>Расслабляющая атмосфера</h3>
-                <p>Мягкий свет, приятная музыка, ароматерапия.</p>
-            </div>
-            <div class="advantage-card">
-                <div class="advantage-icon">📍</div>
-                <h3>Удобное расположение</h3>
-                <p>В центре города, рядом с метро, есть парковка.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Популярные услуги -->
-<section class="services-preview">
-    <div class="container">
-        <h2 class="section-title">Популярные услуги</h2>
-        <div class="services-grid">
-            {% for service in services %}
-            <div class="service-card">
-                <h3>{{ service.name }}</h3>
-                <p>{{ service.description|truncatewords:15|default:"Расслабляющий массаж для восстановления энергии" }}</p>
-                <div class="service-info">
-                    <span>🕐 {{ service.duration }} мин</span>
-                    <span>💰 {{ service.price }} ₽</span>
+            <div class="about__features">
+                <div class="feature">
+                    <span class="feature__icon">⭐</span>
+                    <span class="feature__text">Опытные мастера со стажем от 5 лет</span>
                 </div>
-                <a href="{% url 'appointment_create' %}" class="btn-small">Записаться</a>
+                <div class="feature">
+                    <span class="feature__icon">🕐</span>
+                    <span class="feature__text">Удобный график: с 9:00 до 21:00</span>
+                </div>
+                <div class="feature">
+                    <span class="feature__icon">📍</span>
+                    <span class="feature__text">Центр города, удобная парковка</span>
+                </div>
+                <div class="feature">
+                    <span class="feature__icon">💆</span>
+                    <span class="feature__text">Более 20 видов массажа</span>
+                </div>
             </div>
-            {% empty %}
-            <p class="text-center">Услуги скоро появятся. Следите за обновлениями!</p>
-            {% endfor %}
-        </div>
-        <div class="text-center">
-            <a href="{% url 'service_list' %}" class="btn btn--outline">Смотреть все услуги →</a>
         </div>
     </div>
 </section>
 
-<!-- Наши мастера -->
-<section class="masters-preview">
+<!-- Услуги -->
+<section class="services">
+    <div class="container">
+        <h2 class="section-title">Наши услуги</h2>
+        <div class="services__grid">
+            {% if services %}
+                {% for service in services %}
+                    <div class="service-card">
+                        <h3 class="service-card__title">{{ service.name }}</h3>
+                        {% if service.description %}
+                            <p class="service-card__description">{{ service.description|truncatechars:100 }}</p>
+                        {% endif %}
+                        <div class="service-card__details">
+                            <span class="service-card__duration">{{ service.duration }} мин.</span>
+                            <span class="service-card__price">{{ service.price }} руб.</span>
+                        </div>
+                        <a href="{% url 'appointment_create' %}" class="btn btn--small">Записаться</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-message">Информация об услугах скоро появится.</p>
+            {% endif %}
+        </div>
+        <div class="services__all">
+            <a href="{% url 'service_list' %}" class="btn btn--outline">Все услуги</a>
+        </div>
+    </div>
+</section>
+
+<!-- Мастера -->
+<section class="masters">
     <div class="container">
         <h2 class="section-title">Наши мастера</h2>
-        <div class="masters-grid">
-            {% for master in masters %}
-            <div class="master-card">
-                <div class="master-photo">
-                    {% if master.photo %}
-                    <img src="{{ master.photo }}" alt="{{ master.full_name }}">
-                    {% else %}
-                    <div class="master-placeholder">🧘‍♀️</div>
-                    {% endif %}
-                </div>
-                <h3>{{ master.full_name }}</h3>
-                <p class="specialization">{{ master.specialization }}</p>
-                <p class="experience">Стаж: {{ master.experience }} лет</p>
-                <a href="{% url 'master_detail' master.pk %}" class="btn-link">Подробнее →</a>
-            </div>
-            {% empty %}
-            <p class="text-center">Информация о мастерах скоро появится.</p>
-            {% endfor %}
+        <div class="masters__grid">
+            {% if masters %}
+                {% for master in masters %}
+                    <div class="master-card">
+                        {% if master.photo %}
+                            <img src="{{ master.photo.url }}" alt="{{ master.full_name }}" class="master-card__photo">
+                        {% else %}
+                            <div class="master-card__photo-placeholder">👤</div>
+                        {% endif %}
+                        <h3 class="master-card__name">{{ master.full_name }}</h3>
+                        <p class="master-card__specialization">{{ master.specialization }}</p>
+                        <p class="master-card__experience">Стаж: {{ master.experience }} лет</p>
+                        <a href="{% url 'master_detail' master.id %}" class="btn btn--small">Подробнее</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-message">Информация о мастерах скоро появится.</p>
+            {% endif %}
+        </div>
+        <div class="masters__all">
+            <a href="{% url 'master_list' %}" class="btn btn--outline">Все мастера</a>
         </div>
     </div>
 </section>
@@ -98,18 +107,18 @@
 <!-- Отзывы -->
 <section class="reviews">
     <div class="container">
-        <h2 class="section-title">Отзывы наших клиентов</h2>
-        <div class="reviews-grid">
+        <h2 class="section-title">Отзывы клиентов</h2>
+        <div class="reviews__grid">
             <div class="review-card">
-                <p class="review-text">"Отличный массаж! Анна Ивановна настоящий профессионал. После сеанса чувствую себя заново родившейся."</p>
-                <p class="review-author">— Екатерина, Москва</p>
+                <p class="review-text">"Потрясающий массаж! После первого сеанса забыла о боли в спине. Очень уютная атмосфера и приветливый персонал."</p>
+                <p class="review-author">— Анна, постоянный клиент</p>
             </div>
             <div class="review-card">
-                <p class="review-text">"Очень понравилась атмосфера салона. Тихо, спокойно, расслабляющая музыка. Обязательно приду ещё!"</p>
-                <p class="review-author">— Дмитрий, Москва</p>
+                <p class="review-text">"Хожу к Сергею уже полгода. Профессионал своего дела! Особенно рекомендую спортивный массаж."</p>
+                <p class="review-author">— Дмитрий, спортсмен</p>
             </div>
             <div class="review-card">
-                <p class="review-text">"Лучший массажный салон в городе. Сергей — мастер с золотыми руками. Рекомендую всем!"</p>
+                <p class="review-text">"Лучший массажный салон в городе. У Сергея золотые руки!"</p>
                 <p class="review-author">— Ольга, Москва</p>
             </div>
         </div>
